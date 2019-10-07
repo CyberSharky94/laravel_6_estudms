@@ -162,6 +162,29 @@ class StudentController extends Controller
         ))->with('i', 0);
     }
 
+    public function ajax_show(Request $request)
+    {
+        if($request->ajax())
+        {
+            $student = Student::find($request->stu_id);
+        
+            $title = "View Student";
+            $return_route = 'student.index';
+
+            $student_classes = $student->student_class;
+            $is_ajax = true;
+
+            return view('students.show_ajax', compact(
+                'title', 
+                'return_route',
+                'student',
+                'student_classes',
+                'is_ajax',
+            ))->with('i', 0);
+
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

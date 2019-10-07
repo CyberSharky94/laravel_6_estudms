@@ -1,8 +1,3 @@
-@if (empty($is_ajax))
-    @extends('layouts.app_container');
-    @section('main_content')
-@endif
-
 <table class="table table-bordered table-sm table-striped table-hover">
     <tr>
         <th>Student Name:</th>
@@ -62,7 +57,3 @@
         @endforeach
     </tbody>
 </table>
-
-@if (empty($is_ajax))
-    @endsection
-@endif

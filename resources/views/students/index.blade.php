@@ -41,7 +41,8 @@
                             <td>
                                 <form class="delete_item" action="{{ route('student.destroy',$student->id) }}" method="POST">
                 
-                                    <a class="btn btn-primary" href="{{ route('student.show',$student->id) }}"><i class="fas fa-eye"></i> Show</a>
+                                    {{-- <a class="btn btn-primary btn_show_data" href="{{ route('student.show',$student->id) }}" data-stuid="{{ $student->id }}"><i class="fas fa-eye"></i> Show</a> --}}
+                                    <button type="button" class="btn btn-primary btn_show_data" data-stuid="{{ $student->id }}" data-toggle="modal" data-target="#myModal"><i class="fas fa-eye"></i> Show</button>
                     
                                     <a class="btn btn-warning" href="{{ route('student.edit',$student->id) }}"><i class="fas fa-pencil-alt"></i> Edit</a>
                 
@@ -56,6 +57,32 @@
                     </table>
                 
                     {!! $students->links() !!}
+
+                    {{-- MODAL --}}
+                    <div class="modal fade" id="myModal">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                        
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                <h4 class="modal-title">View Student</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                        
+                                <!-- Modal body -->
+                                <div class="modal-body" id="modal_content">
+                                    {{-- Modal Content Goes Here --}}
+                                </div>
+                        
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+                        
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -70,6 +97,33 @@
             var item_name = $(".item_name:eq("+index+")").text();
             
             return confirm('Are you sure you want to delete "'+ item_name +'"?');
+
+        });
+
+        // AJAX LOAD CONTENT
+        var token = "{{ csrf_token() }}";
+
+        $('.btn_show_data').on('click', function(){
+
+            var ajax = $.ajax({
+                method: "POST",
+                url: "{{ route('student.ajax_show') }}",
+                data: { 
+                    "_token": token,
+                    "stu_id": $(this).data('stuid')
+                }
+            });
+
+            ajax.done(function(data) {
+                console.log( "success" );
+                $('#modal_content').html(data);
+            });
+            ajax.fail(function() {
+                console.log( "error" );
+            });
+            ajax.always(function() {
+                console.log( "complete" );
+            });
 
         });
     });

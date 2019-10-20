@@ -20,7 +20,7 @@ class CreateClassesTable extends Migration
             
             // For FK
             $table->unsignedBigInteger('level_id');
-            $table->foreign('level_id')->references('id')->on('level');
+            $table->foreign('level_id')->references('id')->on('levels');
 
             $table->timestamps();
         });

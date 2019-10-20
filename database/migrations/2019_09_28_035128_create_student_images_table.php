@@ -22,6 +22,9 @@ class CreateStudentImagesTable extends Migration
             $table->string('si_extension');
             $table->integer('status');
 
+            $table->unsignedBigInteger('stu_id');
+            $table->foreign('stu_id')->references('id')->on('students');
+
             $table->timestamps();
         });
     }

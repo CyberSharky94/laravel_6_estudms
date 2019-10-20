@@ -6,12 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class StudentImage extends Model
 {
+    protected $table = 'student_images';
+
     // Table columns associated with the model
     protected $fillable = [
         'si_filename',
         'si_filepath',
         'si_fullpath',
         'si_extension',
+        'stu_id',
         'status',
     ];
 

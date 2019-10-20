@@ -12,7 +12,6 @@ class Student extends Model
         'stu_dob',
         'stu_phone',
         'status',
-        'si_id',
         'current_class_id',
     ];
 
@@ -31,7 +30,7 @@ class Student extends Model
      */
     public function student_image()
     {
-        $student_image = $this->hasOne('App\StudentImage', 'id', 'si_id');
+        $student_image = $this->hasOne('App\StudentImage', 'stu_id', 'id');
 
         return $student_image;
     }

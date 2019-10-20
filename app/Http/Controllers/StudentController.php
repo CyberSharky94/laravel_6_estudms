@@ -97,38 +97,16 @@ class StudentController extends Controller
         }
 
         // If validation pass
-        if($request->hasfile('student_image'))
-        {
-            $file = $request->file('student_image');
-
-            $file_info['getClientOriginalName'] = $file->getClientOriginalName(); // Get Original File Name
-            $file_info['getClientOriginalExtension'] = $file->getClientOriginalExtension(); // Get File Extension
-            $file_info['getRealPath'] = $file->getRealPath(); // Get File Real Path
-            $file_info['getSize'] = $file->getSize(); // Get File Size
-            $file_info['getMimeType'] = $file->getMimeType(); // Get File Mime Type
-
-            $new_filename = 'student_image_'.date('Ymd_his').'.'.$file_info['getClientOriginalExtension'];
-            $file_path = public_path().'/student_images/';
-            $file->move($file_path, $new_filename);
-
-            $student_image = StudentImage::create([
-                'si_filename' => $new_filename,
-                'si_filepath' => $file_path,
-                'si_fullpath' => $file_path.$new_filename,
-                'si_extension' => $file_info['getClientOriginalExtension'],
-            ]);
-        }
 
         // Prepare data
         $data = $request->all();
 
-        // If image exist, get id
-        if(!empty($student_image->id))
-        {
-            $data['si_id'] = $student_image->id;
-        }
-
         $student = Student::create($data);
+
+        if(!empty($student->id))
+        {
+            $data['stu_id'] = $student->id;
+        }
 
         $student_class = StudentClass::create([
             'stu_id' => $student->id,
@@ -136,6 +114,29 @@ class StudentController extends Controller
             'year' => date('Y'),
             'status' => $request->status,
         ]);
+
+        if($request->hasfile('student_image'))
+        {
+            $file = $request->file('student_image');
+
+            $file_info['getClientOriginalName'] = $file->getClientOriginalName(); // Get Original File Name
+            $file_info['getClientOriginalExtension'] = $file->getClientOriginalExtension(); // Get File Extension
+            $file_info['getRealPath'] = $file->getRealPath(); // Get File Real Path
+            $file_info['getMimeType'] = $file->getMimeType(); // Get File Mime Type
+
+            $new_filename = 'student_image_'.date('Ymd_his').'.'.$file_info['getClientOriginalExtension'];
+            $file_path = public_path().'/student_images/';
+            $uploaded_file_data = $file->move($file_path, $new_filename);
+
+            $student_image = StudentImage::create([
+                'si_filename' => $new_filename,
+                'si_filepath' => $file_path,
+                'si_fullpath' => $file_path.$new_filename,
+                'si_extension' => $file_info['getClientOriginalExtension'],
+                'stu_id' => $data['stu_id'],
+                'status' => 1,
+            ]);
+        }
 
         return redirect()->route('student.index')->with('success', 'Student has been added successfully');
     }
@@ -172,6 +173,8 @@ class StudentController extends Controller
             $return_route = 'student.index';
 
             $student_classes = $student->student_class;
+            $student_image = $student->student_image;
+
             $is_ajax = true;
 
             return view('students.show_ajax', compact(
@@ -179,6 +182,7 @@ class StudentController extends Controller
                 'return_route',
                 'student',
                 'student_classes',
+                'student_image',
                 'is_ajax',
             ))->with('i', 0);
 
@@ -281,15 +285,17 @@ class StudentController extends Controller
         $student_classes_id = $student_classes->pluck('id');
         StudentClass::destroy($student_classes_id);
 
+        // Model: Delete StudentImage
+        $student_image = $student->student_image;
+        if(!empty($student_image))
+        {
+            $student_image_id = $student_image->pluck('id');
+            StudentImage::destroy($student_image_id);
+        }
+
         // == END: Delete all related foreign class objects
 
         $student->delete();
-
-        // Model: Delete StudentImage
-        if(!empty($student->si_id))
-        {
-            StudentImage::destroy($student->si_id);
-        }   
 
         return redirect()->route('student.index')->with('success', 'Student <b>'.$stu_name.'</b> has been deleted successfully');
     }
@@ -302,11 +308,16 @@ class StudentController extends Controller
         {
             $level_id = $request->level_id;
             $classes = Classes::where('level_id', $level_id)->get();
-            $class_list = $classes->pluck('class_name', 'id');
 
-            $html = '<option class="class_id_item" value="" selected disabled>Choose Class</option>';
-            foreach ($class_list as $class_id => $class_name) {
-                $html .= '<option class="class_id_item" value="'.$class_id.'">'.$class_name.'</option>';
+            if($classes->isNotEmpty())
+            {
+                $class_list = $classes->pluck('class_name', 'id');
+                $html = '<option class="class_id_item" value="" selected disabled>Choose Class</option>';
+                foreach ($class_list as $class_id => $class_name) {
+                    $html .= '<option class="class_id_item" value="'.$class_id.'">'.$class_name.'</option>';
+                }
+            } else {
+                $html = '<option class="class_id_item" value="" selected disabled>No Class Available</option>';
             }
 
             return $html;

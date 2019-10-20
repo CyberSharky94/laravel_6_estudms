@@ -1,5 +1,10 @@
 <table class="table table-bordered table-sm table-striped table-hover">
     <tr>
+        <td class="text-center" colspan="2">
+            <img src="{{ 'student_images/'.$student_image->si_filename }}" alt="Picture of {{ $student->stu_name }}">
+        </td>
+    </tr>
+    <tr>
         <th>Student Name:</th>
         <td>{{ $student->stu_name }}</td>
     </tr>

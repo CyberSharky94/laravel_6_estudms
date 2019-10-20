@@ -18,11 +18,13 @@
     <fieldset>
 
     
-    <!-- File Button --> 
+    <!-- File Button & Image Placeholder --> 
     <div class="form-group">
         <label class="col-md-4 control-label" for="student_image">Add Student Picture:</label>
         <div class="col-md-4">
-            <input id="student_image" name="student_image" class="input-file" type="file" accept=".jpg, .jpeg, .png">
+            <img id="student_image_placeholder" src="" alt="" style="border-radius: 10px; margin-bottom: 10px;"><br>
+            <button class="btn btn-primary" type="button" onclick="$('#student_image_btn').trigger('click');">Add Image</button>
+            <input style="display: none;" id="student_image_btn" name="student_image" class="input-file" type="file" accept=".jpg, .jpeg, .png" onchange="preview_selected_image(this)">
         </div>
     </div>
 
@@ -99,6 +101,31 @@
     </fieldset>
 </form>
 
+{{-- MODAL --}}
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+    
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">View Student</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+    
+            <!-- Modal body -->
+            <div class="modal-body" id="modal_content">
+                {{-- Modal Content Goes Here --}}
+            </div>
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+    
+        </div>
+    </div>
+</div>
+
 {{-- JavaScript --}}
 <script>
     $(document).ready(function(){
@@ -127,7 +154,26 @@
                 console.log( "complete" );
             });
         });
+
+        // $('form').on('submit', function(e){
+        //     // e.preventDefault();
+        // });
     });
+
+    // Preview Image after Choosing File
+    function preview_selected_image(image) {
+        if(image.files && image.files[0])
+        {
+            console.log(image.files[0]);
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $("#student_image_placeholder").attr('src', e.target.result).width(200).height(200);
+            }
+            reader.readAsDataURL(image.files[0]);
+        } else {
+            $("#student_image_placeholder").attr('src', null);
+        }
+    }
 </script>
 
 @endsection

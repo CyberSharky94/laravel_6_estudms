@@ -27,7 +27,7 @@
     <div class="form-group">
         <label class="col-md-4 control-label" for="student_image">Add Student Picture:</label>
         <div class="col-md-4">
-            <img id="student_image_placeholder" src="{{ url('student_images/'.$student->student_image->si_filename) }}" alt="Picture of {{ $student->stu_name }}" style="border-radius: 10px; margin-bottom: 10px;">
+            <img id="student_image_placeholder" src="{{ url('storage/student_images/'.$student->student_image->si_filename) }}" alt="Picture of {{ $student->stu_name }}" style="border-radius: 10px; margin-bottom: 10px;">
             <button class="btn btn-primary" type="button" onclick="$('#student_image_btn').trigger('click');">Add Image</button>
             <input style="display: none;" id="student_image_btn" name="student_image" class="input-file" type="file" accept=".jpg, .jpeg, .png" onchange="preview_selected_image(this)">
         </div>

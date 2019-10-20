@@ -125,7 +125,7 @@ class StudentController extends Controller
             $file_info['getMimeType'] = $file->getMimeType(); // Get File Mime Type
 
             $new_filename = 'student_image_'.date('Ymd_his').'.'.$file_info['getClientOriginalExtension'];
-            $file_path = public_path().'/student_images/';
+            $file_path = public_path().'/storage/student_images/';
             $uploaded_file_data = $file->move($file_path, $new_filename);
 
             $student_image = StudentImage::create([
@@ -263,6 +263,41 @@ class StudentController extends Controller
                 'status' => $request->status,
             ]);
 
+        }
+
+        if($request->hasfile('student_image'))
+        {
+            $file = $request->file('student_image');
+
+            $file_info['getClientOriginalName'] = $file->getClientOriginalName(); // Get Original File Name
+            $file_info['getClientOriginalExtension'] = $file->getClientOriginalExtension(); // Get File Extension
+            $file_info['getRealPath'] = $file->getRealPath(); // Get File Real Path
+            $file_info['getMimeType'] = $file->getMimeType(); // Get File Mime Type
+
+            $new_filename = 'student_image_'.date('Ymd_his').'.'.$file_info['getClientOriginalExtension'];
+            $file_path = public_path().'/storage/student_images/';
+            $uploaded_file_data = $file->move($file_path, $new_filename);
+
+            $student_image = $student->student_image;
+            if(!empty($student_image))
+            {
+                // Update Existing Image
+                $student_image->si_filename = $new_filename;
+                $student_image->si_filepath = $file_path;
+                $student_image->si_fullpath = $file_path.$new_filename;
+                $student_image->si_extension = $file_info['getClientOriginalExtension'];
+                $student_image->update();
+            } else {
+                // Store New Image if Not Exist
+                $student_image = StudentImage::create([
+                    'si_filename' => $new_filename,
+                    'si_filepath' => $file_path,
+                    'si_fullpath' => $file_path.$new_filename,
+                    'si_extension' => $file_info['getClientOriginalExtension'],
+                    'stu_id' => $student->stu_id,
+                    'status' => 1,
+                ]);
+            }
         }
 
         return redirect()->route('student.index')->with('success', 'Student <b>'.$student->stu_name.'</b> has been updated successfully');

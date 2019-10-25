@@ -11,7 +11,7 @@
 
 * Server: <b>Apache (Windows require VC14 @ VC15) / Nginx</b>
 * PHP Version: <b>>= 7.2</b>
-* Database: <b>PostgreSQL 12</b>
+* Database: <b>PostgreSQL 12 (Recommended) / MySQL 5.7 / MariaDB 10.4 </b>
 * Composer - https://getcomposer.org/
 * Git - https://git-scm.com/
 * Laravel Version: <b>6.0</b>
@@ -28,25 +28,25 @@
 
 6. Setting ```.env``` file according to your development environment. Example:
 <pre>
-    # Sample of Database Configuration:
+# Sample of Database Configuration:
 
-    DB_CONNECTION=pgsql
-    DB_HOST=192.168.119.131
-    DB_PORT=5432
-    DB_DATABASE=laravel_student_db
-    DB_USERNAME=postgres
-    DB_PASSWORD=root
+DB_CONNECTION=pgsql
+DB_HOST=192.168.119.131
+DB_PORT=5432
+DB_DATABASE=laravel_student_db
+DB_USERNAME=postgres
+DB_PASSWORD=root
 
-    # Sample of Mail Configuration:
+# Sample of Mail Configuration:
 
-    MAIL_DRIVER=smtp
-    MAIL_HOST=smtp.mailtrap.io
-    MAIL_PORT=2525
-    MAIL_USERNAME=!!!MAIL_TRAP_USERNAME!!!
-    MAIL_PASSWORD=!!!MAIL_TRAP_PASSWORD!!!
-    MAIL_FROM_ADDRESS=from@example.com
-    MAIL_FROM_NAME=Example
-    MAIL_ENCRYPTION=null
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=!!!MAIL_TRAP_USERNAME!!!
+MAIL_PASSWORD=!!!MAIL_TRAP_PASSWORD!!!
+MAIL_FROM_ADDRESS=from@example.com
+MAIL_FROM_NAME=Example
+MAIL_ENCRYPTION=null
 </pre>
 
 7. If necessary, run migration using following command:
@@ -55,7 +55,7 @@
 <pre>php artisan key:generate</pre>
 9. Setup complete. Try to run the Laravel project using following command:
 <pre>php artisan serve</pre>
-or directly run it on browser by navigate to:
+    or directly run it on browser by navigate to:
 <pre>http://localhost/laravel_6_estudms/public</pre>
 
 ## About Laravel

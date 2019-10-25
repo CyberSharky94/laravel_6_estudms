@@ -30,12 +30,23 @@
 <pre>
 # Sample of Database Configuration:
 
+---> For PostgreSQL:
+
 DB_CONNECTION=pgsql
-DB_HOST=192.168.119.131
+DB_HOST=127.0.0.1
 DB_PORT=5432
 DB_DATABASE=laravel_student_db
 DB_USERNAME=postgres
 DB_PASSWORD=root
+
+---> For MySQL / MariaDB:
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel_student_db
+DB_USERNAME=root
+DB_PASSWORD=
 
 # Sample of Mail Configuration:
 

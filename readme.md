@@ -9,12 +9,12 @@
 
 ## Development Requirement
 
+* Laravel Version: <b>6.0</b>
 * Server: <b>Apache (Windows require VC14 @ VC15) / Nginx</b>
 * PHP Version: <b>>= 7.2</b>
 * Database: <b>PostgreSQL 12 (Recommended) / MySQL 5.7 / MariaDB 10.4 </b>
 * Composer - https://getcomposer.org/
 * Git - https://git-scm.com/
-* Laravel Version: <b>6.0</b>
 
 ## How to Install
 

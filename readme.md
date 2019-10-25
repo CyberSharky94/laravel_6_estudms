@@ -53,9 +53,9 @@ MAIL_ENCRYPTION=null
 <pre>php artisan migrate</pre>
 8. Generate ```APP_KEY``` using following command:
 <pre>php artisan key:generate</pre>
-9. Setup complete. Try to run the Laravel project using following command:
+9.1. Setup complete. Try to run the Laravel project using following command:
 <pre>php artisan serve</pre>
-    or directly run it on browser by navigate to:
+9.2. Or directly run it on browser by navigate to:
 <pre>http://localhost/laravel_6_estudms/public</pre>
 
 ## About Laravel

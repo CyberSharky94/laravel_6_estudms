@@ -102,7 +102,7 @@ class StudentController extends Controller
         return view('students.create', compact(
             'title', 
             'return_route',
-            'level_list',
+            'level_list'
         ));
     }
 
@@ -188,7 +188,7 @@ class StudentController extends Controller
             'title', 
             'return_route',
             'student',
-            'student_classes',
+            'student_classes'
         ))->with('i', 0);
     }
 
@@ -212,7 +212,7 @@ class StudentController extends Controller
                 'student',
                 'student_classes',
                 'student_image',
-                'is_ajax',
+                'is_ajax'
             ))->with('i', 0);
 
         }
@@ -247,7 +247,7 @@ class StudentController extends Controller
             'student',
             'current_level_id',
             'level_list',
-            'class_list',
+            'class_list'
         ));
     }
 

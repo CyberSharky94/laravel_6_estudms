@@ -44,15 +44,44 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
         $title = "Student Management";
+
+        $students = new Student(); // Init Student model
+
+        $levels = Level::all(); // Level list
+
+        // Searching Process
+        $url_data = $request->query(); // Assign GET data
+
+        if(!empty($url_data['search_stu_name']))
+        {
+            $students = $students->where('stu_name', 'ilike', '%'.$url_data['search_stu_name'].'%');
+        }
+        if(!empty($url_data['search_level']))
+        {
+            $students = $students->join('classes', 'students.current_class_id', '=', 'classes.id')
+                                 ->where('classes.level_id', $url_data['search_level']);
+        }
+        // END: Searching Process
+
+        // Table Pagination Process
+        if(!empty($url_data['limit']))
+        {
+            $limit_per_page = $url_data['limit'];
+        } else {
         $limit_per_page = 10;
-        $students = Student::latest()->paginate($limit_per_page);
+        }
+
+        $students = $students->paginate($limit_per_page);
+        // END: Table Pagination Process
+
         return view('students.index', compact(
             'title',
             'students',
+            'levels',
+            'limit_per_page'
             ))->with('i', (request()->input('page', 1) - 1) * $limit_per_page);
     }
 

@@ -71,7 +71,7 @@ class StudentController extends Controller
         {
             $limit_per_page = $url_data['limit'];
         } else {
-        $limit_per_page = 10;
+            $limit_per_page = 10;
         }
 
         $students = $students->paginate($limit_per_page);
@@ -125,18 +125,14 @@ class StudentController extends Controller
                     ->withInput();
         }
 
-        // If validation pass
+        // If validation pass ----------v
 
         // Prepare data
         $data = $request->all();
 
-        $student = Student::create($data);
+        $student = Student::create($request->all()); // Add new Student
 
-        if(!empty($student->id))
-        {
-            $data['stu_id'] = $student->id;
-        }
-
+        // Add new StudentClass based on Student->id and Classes->id
         $student_class = StudentClass::create([
             'stu_id' => $student->id,
             'class_id' => $request->current_class_id,
@@ -144,27 +140,32 @@ class StudentController extends Controller
             'status' => $request->status,
         ]);
 
-        if($request->hasfile('student_image'))
+        if($request->hasfile('student_image')) // Check if file exist
         {
-            $file = $request->file('student_image');
+            $file = $request->file('student_image'); // Get file from request
 
             $file_info['getClientOriginalName'] = $file->getClientOriginalName(); // Get Original File Name
             $file_info['getClientOriginalExtension'] = $file->getClientOriginalExtension(); // Get File Extension
             $file_info['getRealPath'] = $file->getRealPath(); // Get File Real Path
             $file_info['getMimeType'] = $file->getMimeType(); // Get File Mime Type
 
-            $new_filename = 'student_image_'.date('Ymd_his').'.'.$file_info['getClientOriginalExtension'];
-            $file_path = public_path().'/storage/student_images/';
-            $uploaded_file_data = $file->move($file_path, $new_filename);
+            $new_filename = 'student_image_'.date('Ymd_his').'.'.$file_info['getClientOriginalExtension']; // Generate new filename
+            $file_path = '/public/student_images/'; // Assign Storage path
 
-            $student_image = StudentImage::create([
-                'si_filename' => $new_filename,
-                'si_filepath' => $file_path,
-                'si_fullpath' => $file_path.$new_filename,
-                'si_extension' => $file_info['getClientOriginalExtension'],
-                'stu_id' => $data['stu_id'],
-                'status' => 1,
-            ]);
+            $uploaded_file_data = $file->storeAs($file_path, $new_filename); // Move file to Storage location
+
+            // Add new StudentImage record if upload success
+            if(!empty($uploaded_file_data))
+            {
+                $student_image = StudentImage::create([
+                    'si_filename' => $new_filename,
+                    'si_filepath' => $file_path,
+                    'si_fullpath' => $file_path.$new_filename,
+                    'si_extension' => $file_info['getClientOriginalExtension'],
+                    'stu_id' => $student->id,
+                    'status' => 1,
+                ]);
+            }
         }
 
         return redirect()->route('student.index')->with('success', 'Student has been added successfully');
@@ -271,13 +272,13 @@ class StudentController extends Controller
                     ->withInput();
         }
 
-        $student->update($request->all());
+        // If validation pass ----------v
+        $student->update($request->all()); // Update Student record
 
         // Get Existing Student Class Data for Current Year
         $student_class = StudentClass::where('year', date('Y'))->first();
         if(!empty($student_class))
         {
-
             // If exist
             $student_class->class_id = $request->current_class_id;
             $student_class->save();
@@ -294,38 +295,43 @@ class StudentController extends Controller
 
         }
 
-        if($request->hasfile('student_image'))
+        if($request->hasfile('student_image'))  // Check if file exist
         {
-            $file = $request->file('student_image');
+            $file = $request->file('student_image'); // Get file from request
 
             $file_info['getClientOriginalName'] = $file->getClientOriginalName(); // Get Original File Name
             $file_info['getClientOriginalExtension'] = $file->getClientOriginalExtension(); // Get File Extension
             $file_info['getRealPath'] = $file->getRealPath(); // Get File Real Path
             $file_info['getMimeType'] = $file->getMimeType(); // Get File Mime Type
 
-            $new_filename = 'student_image_'.date('Ymd_his').'.'.$file_info['getClientOriginalExtension'];
-            $file_path = public_path().'/storage/student_images/';
-            $uploaded_file_data = $file->move($file_path, $new_filename);
+            $new_filename = 'student_image_'.date('Ymd_his').'.'.$file_info['getClientOriginalExtension']; // Generate new filename
+            $file_path = '/public/student_images/'; // Assign Storage path
 
-            $student_image = $student->student_image;
-            if(!empty($student_image))
+            $uploaded_file_data = $file->storeAs($file_path, $new_filename); // Move file to Storage location
+
+            // If Upload success
+            if(!empty($uploaded_file_data))
             {
-                // Update Existing Image
-                $student_image->si_filename = $new_filename;
-                $student_image->si_filepath = $file_path;
-                $student_image->si_fullpath = $file_path.$new_filename;
-                $student_image->si_extension = $file_info['getClientOriginalExtension'];
-                $student_image->update();
-            } else {
-                // Store New Image if Not Exist
-                $student_image = StudentImage::create([
-                    'si_filename' => $new_filename,
-                    'si_filepath' => $file_path,
-                    'si_fullpath' => $file_path.$new_filename,
-                    'si_extension' => $file_info['getClientOriginalExtension'],
-                    'stu_id' => $student->stu_id,
-                    'status' => 1,
-                ]);
+                $student_image = $student->student_image; // Get StudentImage record for the Student
+                if(!empty($student_image))
+                {
+                    // Update Existing Image 
+                    $student_image->si_filename = $new_filename;
+                    $student_image->si_filepath = $file_path;
+                    $student_image->si_fullpath = $file_path.$new_filename;
+                    $student_image->si_extension = $file_info['getClientOriginalExtension'];
+                    $student_image->update();
+                } else {
+                    // Store New Image if Not Exist
+                    $student_image = StudentImage::create([
+                        'si_filename' => $new_filename,
+                        'si_filepath' => $file_path,
+                        'si_fullpath' => $file_path.$new_filename,
+                        'si_extension' => $file_info['getClientOriginalExtension'],
+                        'stu_id' => $student->stu_id,
+                        'status' => 1,
+                    ]);
+                }
             }
         }
 

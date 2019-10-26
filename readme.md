@@ -19,11 +19,15 @@
 ## How to Install
 
 1. Open Terminal
+
 2. Clone this project into <b>www @ htdocs</b> directory
 <pre>git clone https://github.com/CyberSharky94/laravel_6_estudms.git</pre>
+
 3. Update Composer in project directory using following command:
 <pre>composer update</pre>
+
 4. Create a database. (if not exist).
+
 5. Duplicate ```.env.example``` file. Rename the new file into ```.env```.
 
 6. Setting ```.env``` file according to your development environment. Example:
@@ -60,13 +64,18 @@ MAIL_FROM_NAME=Example
 MAIL_ENCRYPTION=null
 </pre>
 
-7. If necessary, run migration using following command:
+7. If necessary, run ```migration``` using following command:
 <pre>php artisan migrate</pre>
-8. Generate ```APP_KEY``` using following command:
+
+8. Link ```storage``` using following command:
+
+9. Generate ```APP_KEY``` using following command:
 <pre>php artisan key:generate</pre>
-9.1. Setup complete. Try to run the Laravel project using following command:
+
+10. Setup complete.
+1) Try to run the Laravel project using following command:
 <pre>php artisan serve</pre>
-9.2. Or directly run it on browser by navigate to:
+2) Or directly run it on browser by navigate to:
 <pre>http://localhost/laravel_6_estudms/public</pre>
 
 ## About Laravel

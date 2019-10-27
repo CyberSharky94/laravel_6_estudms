@@ -2,7 +2,7 @@
     @if (!empty($student_image))
         <tr>
             <td class="text-center" colspan="2">
-                <img src="{{ 'storage/student_images/'.$student_image->si_filename }}" alt="Picture of {{ $student->stu_name }}">
+                <img src="{{ url('storage/student_images/'.$student_image->si_filename) }}" alt="Picture of {{ $student->stu_name }}">
             </td>
         </tr>
     @endif

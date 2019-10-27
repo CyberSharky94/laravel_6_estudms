@@ -86,6 +86,7 @@ class StudentController extends Controller
             ))->with('i', (request()->input('page', 1) - 1) * $limit_per_page);
     }
 
+    // Customized Index to Handle data using DataTables
     public function index_datatable(Request $request)
     {
         $title = "Student Management";
@@ -250,6 +251,7 @@ class StudentController extends Controller
         ))->with('i', 0);
     }
 
+    // Method to handle AJAX request for Student Details
     public function ajax_show(Request $request)
     {
         if($request->ajax())
@@ -424,6 +426,7 @@ class StudentController extends Controller
 
         $student->delete();
 
+        // Added extra <input type="hidden" name="return_location"> for redirecting user to index_datatable() route
         if(!empty($request->return_location))
             return redirect()->route($request->return_location)->with('success', 'Student <b>'.$stu_name.'</b> has been deleted successfully');
         else 

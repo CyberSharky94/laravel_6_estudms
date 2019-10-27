@@ -32,3 +32,9 @@ Route::post('/student/ajax_show', 'StudentController@ajax_show')->middleware('au
 
 // Class Controller Routes
 Route::resource('class','ClassController')->middleware('auth');
+
+// Test Controller Routes
+Route::get('/test', 'TestController@index')->name('test.index');
+Route::get('test/export_pdf', 'TestController@export_pdf')->name('test.export_pdf');
+Route::get('test/export_excel', 'TestController@export_excel')->name('test.export_excel');
+Route::get('test/send_email', 'TestController@send_email')->name('test.send_email');

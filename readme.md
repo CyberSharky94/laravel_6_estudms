@@ -53,6 +53,7 @@ DB_USERNAME=root
 DB_PASSWORD=
 
 # Sample of Mail Configuration:
+-> Sign Up Account @ https://mailtrap.io/
 
 MAIL_DRIVER=smtp
 MAIL_HOST=smtp.mailtrap.io

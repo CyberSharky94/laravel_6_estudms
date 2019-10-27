@@ -15,7 +15,8 @@
         "laravel/tinker": "^1.0",
         "laravel/ui": "^1.0",
         "mpdf/mpdf": "^8.0",
-        "phpoffice/phpspreadsheet": "^1.9"
+        "phpoffice/phpspreadsheet": "^1.9",
+        "yajra/laravel-datatables-oracle": "^9.7"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

@@ -34,7 +34,7 @@
             <select id="level_id" name="level_id" class="form-control" required>
                 <option value="" disabled>Choose Level</option>
                 @foreach ($level_list as $level_id => $level_name)
-                    <option value="{{ $level_id }}" {{ ($class->level->level_id === $level_id) ? 'selected' : null }} >{{ $level_name }}</option>
+                    <option value="{{ $level_id }}" {{ ($class->level->id === $level_id) ? 'selected' : null }} >{{ $level_name }}</option>
                 @endforeach
             </select>
         </div>

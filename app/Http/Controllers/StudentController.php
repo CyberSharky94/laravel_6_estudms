@@ -9,7 +9,7 @@ use App\StudentClass;
 use App\StudentImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use DataTables;
+use Yajra\DataTables\Facades\DataTables;
 
 class StudentController extends Controller
 {

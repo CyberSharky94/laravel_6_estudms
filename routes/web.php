@@ -26,6 +26,7 @@ Route::resource('level','LevelController')->middleware('auth');
 Route::resource('role','RoleController')->middleware('auth');
 
 // Student Controller Routes
+Route::get('/student/index_datatable', 'StudentController@index_datatable')->middleware('auth')->name('student.index_datatable');
 Route::resource('student','StudentController')->middleware('auth');
 Route::post('/student/ajax_get_class_list', 'StudentController@ajaxGetClassList')->middleware('auth')->name('student.ajax_get_class_list');
 Route::post('/student/ajax_show', 'StudentController@ajax_show')->middleware('auth')->name('student.ajax_show');

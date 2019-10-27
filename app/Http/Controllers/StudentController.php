@@ -9,6 +9,7 @@ use App\StudentClass;
 use App\StudentImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use DataTables;
 
 class StudentController extends Controller
 {
@@ -83,6 +84,62 @@ class StudentController extends Controller
             'levels',
             'limit_per_page'
             ))->with('i', (request()->input('page', 1) - 1) * $limit_per_page);
+    }
+
+    public function index_datatable(Request $request)
+    {
+        $title = "Student Management";
+
+        $students = new Student(); // Init Student model
+        $students = $students->select('students.id', 'stu_name', 'level_name', 'class_name', 'students.status');
+        $students = $students->join('classes', 'students.current_class_id', '=', 'classes.id');
+        $students = $students->join('levels', 'classes.level_id', '=', 'levels.id');
+
+        // dd($students);
+
+        $levels = Level::all(); // Level list
+
+        if($request->ajax())
+        {
+            // Custom Searching Process
+            if(!empty($request['search_stu_name']))
+            {
+                $students = $students->where('stu_name', 'ilike', '%'.$request['search_stu_name'].'%');
+            }
+            if(!empty($request['search_level']))
+            {
+                $students = $students->where('classes.level_id', $request['search_level']);
+            }
+            // END: Custom Searching Process
+
+            $students = $students->get();
+
+            $dt = DataTables::of($students)
+                    ->addIndexColumn()
+                    ->addColumn('status', function($model){
+                        return $model->getStatus();
+                    })->rawColumns(['status'])
+                    ->addColumn('action', function($model){
+                        $output = '<form class="delete_item" action="'.route('student.destroy',$model->id).'" method="POST" data-test="hello">';
+                        $output .= csrf_field();
+                        $output .= method_field('DELETE');
+                        $output .= '<input type="hidden" name="return_location" value="student.index_datatable">';
+                        $output .= '<button type="button" class="btn btn-primary btn_show_data" data-stuid="'. $model->id .'" data-toggle="modal" data-target="#myModal" onclick="ajax_show_details('.$model->id.')"><i class="fas fa-eye"></i> Show</button> ';
+                        $output .= '<a class="btn btn-warning" href="'. route('student.edit',$model->id) .'"><i class="fas fa-pencil-alt"></i> Edit</a> ';
+                        $output .= '<button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button>';
+                        $output .= '</form>';
+                        return $output;
+                    })->rawColumns(['action'])
+                    ->make(true);
+
+            return $dt;
+        }
+
+        return view('students.index_datatable', compact(
+            'title',
+            // 'students',
+            'levels',
+        ));
     }
 
     /**
@@ -344,7 +401,7 @@ class StudentController extends Controller
      * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Student $student)
+    public function destroy(Student $student, Request $request)
     {
         $stu_name = $student->stu_name;
 
@@ -367,7 +424,10 @@ class StudentController extends Controller
 
         $student->delete();
 
-        return redirect()->route('student.index')->with('success', 'Student <b>'.$stu_name.'</b> has been deleted successfully');
+        if(!empty($request->return_location))
+            return redirect()->route($request->return_location)->with('success', 'Student <b>'.$stu_name.'</b> has been deleted successfully');
+        else 
+            return redirect()->route('student.index')->with('success', 'Student <b>'.$stu_name.'</b> has been deleted successfully');
     }
 
     // AJAX Methods Section

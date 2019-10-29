@@ -139,7 +139,7 @@ class StudentController extends Controller
         return view('students.index_datatable', compact(
             'title',
             // 'students',
-            'levels',
+            'levels'
         ));
     }
 

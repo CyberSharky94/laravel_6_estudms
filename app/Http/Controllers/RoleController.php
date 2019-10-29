@@ -45,7 +45,7 @@ class RoleController extends Controller
         $roles = Role::latest()->paginate($limit_per_page);
         return view('roles.index', compact(
             'title',
-            'roles',
+            'roles'
             ))->with('i', (request()->input('page', 1) - 1) * $limit_per_page);
     }
 
@@ -62,7 +62,7 @@ class RoleController extends Controller
 
         return view('roles.create', compact(
             'title', 
-            'return_route',
+            'return_route'
         ));
     }
 
@@ -105,7 +105,7 @@ class RoleController extends Controller
         return view('roles.show', compact(
             'title', 
             'return_route',
-            'role',
+            'role'
         ));
     }
 
@@ -124,7 +124,7 @@ class RoleController extends Controller
         return view('roles.edit', compact(
             'title', 
             'return_route',
-            'role',
+            'role'
         ));
     }
 

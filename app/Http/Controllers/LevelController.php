@@ -45,7 +45,7 @@ class LevelController extends Controller
         $levels = Level::latest()->paginate($limit_per_page);
         return view('levels.index', compact(
             'title',
-            'levels',
+            'levels'
             ))->with('i', (request()->input('page', 1) - 1) * $limit_per_page);
     }
 
@@ -62,7 +62,7 @@ class LevelController extends Controller
 
         return view('levels.create', compact(
             'title', 
-            'return_route',
+            'return_route'
         ));
     }
 
@@ -105,7 +105,7 @@ class LevelController extends Controller
         return view('levels.show', compact(
             'title', 
             'return_route',
-            'level',
+            'level'
         ));
     }
 
@@ -124,7 +124,7 @@ class LevelController extends Controller
         return view('levels.edit', compact(
             'title', 
             'return_route',
-            'level',
+            'level'
         ));
     }
 

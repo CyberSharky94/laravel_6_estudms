@@ -46,7 +46,7 @@ class ClassController extends Controller
         $classes = Classes::latest()->paginate($limit_per_page);
         return view('classes.index', compact(
             'title',
-            'classes',
+            'classes'
             ))->with('i', (request()->input('page', 1) - 1) * $limit_per_page);
     }
 
@@ -67,7 +67,7 @@ class ClassController extends Controller
         return view('classes.create', compact(
             'title', 
             'return_route',
-            'level_list',
+            'level_list'
         ));
     }
 
@@ -110,7 +110,7 @@ class ClassController extends Controller
         return view('classes.show', compact(
             'title', 
             'return_route',
-            'class',
+            'class'
         ));
     }
 
@@ -133,7 +133,7 @@ class ClassController extends Controller
             'title', 
             'return_route',
             'class',
-            'level_list',
+            'level_list'
         ));
     }
 

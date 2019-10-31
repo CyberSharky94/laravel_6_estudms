@@ -9,11 +9,13 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "barryvdh/laravel-cors": "^0.11.4",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
         "laravel/ui": "^1.0",
+        "laravelcollective/html": "^6.0",
         "mpdf/mpdf": "^8.0",
         "owen-it/laravel-auditing": "^9.3",
         "phpoffice/phpspreadsheet": "^1.9",

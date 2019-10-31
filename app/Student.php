@@ -57,6 +57,18 @@ class Student extends Model
         }
     }
 
+    public static function getStatusRaw($status)
+    {
+        if($status === 1)
+        {
+            return "Active";
+        }
+        else if($status === 0)
+        {
+            return "Inactive";
+        }
+    }
+
     public function changeDateFormat($date)
     {
         return date('d/m/Y', strtotime($date));

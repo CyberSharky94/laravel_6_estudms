@@ -13,9 +13,8 @@
     </div>
 @endif
 
-<form class="form-horizontal" action="{{ route('student_extra.update', $student->id) }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    @method('PUT')
+    {{-- {!! Form::open(['url' => route('route_name', 'id'), 'method' => 'put', 'files' => true]) !!} --}}
+    {!! Form::open(['url' => route('student_extra.update', $student->id), 'method' => 'put', 'files' => true]) !!}
     <fieldset>
 
     
@@ -29,6 +28,7 @@
         <div class="col-md-4">
             <img id="student_image_placeholder" src="{{ (!empty($student->student_image->si_filename)) ? url('storage/student_images/'.$student->student_image->si_filename) : null }}" style="border-radius: 10px; margin-bottom: 10px;">
             <button class="btn btn-primary" type="button" onclick="$('#student_image_btn').trigger('click');">Add Image</button>
+            {{-- {!! Form::file('name', [$options]) !!} --}}
             {!! Form::file('student_image', [
                 'id' => 'student_image_btn',
                 'class' => "input-file",
@@ -43,6 +43,7 @@
     <div class="form-group">
         <label class="col-md-4 control-label" for="stu_name">Student Name:</label>  
         <div class="col-md-4">
+            {{-- {!! Form::text('name', 'value', [$options]) !!} --}}
             {!! Form::text('stu_name', $student->stu_name, [
                 'id' => "stu_name",
                 'class' => 'form-control input-md',
@@ -55,6 +56,7 @@
     <div class="form-group">
         <label class="col-md-4 control-label" for="stu_dob">Date of Birth:</label>  
         <div class="col-md-4">
+            {{-- {!! Form::date('name', 'value', [$options]) !!} --}}
             {!! Form::date('stu_dob', $student->stu_dob, [
                 'id' => 'stu_dob',
                 'class' => 'form-control input-md',
@@ -66,6 +68,7 @@
     <div class="form-group">
         <label class="col-md-4 control-label" for="stu_phone">Phone Number:</label>  
         <div class="col-md-4">
+            {{-- {!! Form::text('name', 'value', [$options]) !!} --}}
             {!! Form::text('stu_phone', $student->stu_phone, [
                 'id' => "stu_phone",
                 'class' => 'form-control input-md',
@@ -77,6 +80,7 @@
     <div class="form-group">
         <label class="col-md-4 control-label" for="level_id">Level:</label>
         <div class="col-md-4">
+            {{-- {!! Form::select('name', '['list_value' => 'list_label']', 'selected_data', [$options]) !!} --}}
             {!! Form::select('level_id', $level_list, $student->class->level->id, [
                 'id' => "level_id",
                 'class' => 'form-control input-md',
@@ -89,6 +93,7 @@
     <div class="form-group">
         <label class="col-md-4 control-label" for="current_class_id">Class:</label>
         <div class="col-md-4">
+            {{-- {!! Form::select('name', '['list_value' => 'list_label']', 'selected_data', [$options]) !!} --}}
             {!! Form::select('current_class_id', $class_list, $student->current_class_id, [
                 'id' => "current_class_id",
                 'class' => 'form-control input-md',
@@ -101,6 +106,7 @@
     <div class="form-group">
         <label class="col-md-4 control-label" for="status">Status</label>
         <div class="col-md-4">
+            {{-- {!! Form::select('name', '['list_value' => 'list_label']', 'selected_data', [$options]) !!} --}}
             {!! Form::select('status', [
                 1 => 'Active',
                 0 => 'Inactive'
@@ -122,7 +128,7 @@
     </div>
 
     </fieldset>
-</form>
+    {!! Form::close() !!}
 
 {{-- JavaScript --}}
 <script>

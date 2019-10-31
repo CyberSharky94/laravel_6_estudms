@@ -23,6 +23,8 @@
             {{ Form::label('student_image', 'Student\'s Picture:', ['class' => 'control-label']) }}
             <img id="student_image_placeholder" src="" alt="" style="border-radius: 10px; margin-bottom: 10px;"><br>
             <button class="btn btn-primary" type="button" onclick="$('#student_image_btn').trigger('click');">Add Image</button>
+            
+            {{-- {!! Form::file('name', [$options]) !!} --}}
             {!! Form::file('student_image', [
                 'id' => 'student_image_btn',
                 'class' => "input-file",
@@ -37,6 +39,8 @@
     <div class="form-group">
         <label class="col-md-4 control-label" for="stu_name">Student Name:</label>  
         <div class="col-md-4">
+
+            {{-- {!! Form::text('name', 'value', [$options]) !!} --}}
             {!! Form::text('stu_name', null, [
                 'id' => "stu_name",
                 'class' => 'form-control input-md',
@@ -49,6 +53,8 @@
     <div class="form-group">
         <label class="col-md-4 control-label" for="stu_dob">Date of Birth:</label>  
         <div class="col-md-4">
+
+            {{-- {!! Form::date('name', 'value', [$options]) !!} --}}
             {!! Form::date('stu_dob', date('Y-m-d'), [
                 'id' => 'stu_dob',
                 'class' => 'form-control input-md',
@@ -60,6 +66,8 @@
     <div class="form-group">
         <label class="col-md-4 control-label" for="stu_phone">Phone Number:</label>  
         <div class="col-md-4">
+
+            {{-- {!! Form::text('name', 'value', [$options]) !!} --}}
             {!! Form::text('stu_phone', null, [
                 'id' => "stu_phone",
                 'class' => 'form-control input-md',
@@ -71,6 +79,8 @@
     <div class="form-group">
         <label class="col-md-4 control-label" for="level_id">Level:</label>
         <div class="col-md-4">
+
+            {{-- {!! Form::select('name', '['list_value' => 'list_label']', 'selected_data', [$options]) !!} --}}
             {!! Form::select('level_id', $level_list, null, [
                 'id' => "level_id",
                 'class' => 'form-control input-md',
@@ -83,6 +93,8 @@
     <div class="form-group">
         <label class="col-md-4 control-label" for="current_class_id">Class:</label>
         <div class="col-md-4">
+
+            {{-- {!! Form::select('name', '['list_value' => 'list_label']', 'selected_data', [$options]) !!} --}}
             {!! Form::select('current_class_id', [], null, [
                 'id' => "current_class_id",
                 'class' => 'form-control input-md',
@@ -95,6 +107,8 @@
     <div class="form-group">
         <label class="col-md-4 control-label" for="status">Status</label>
         <div class="col-md-4">
+
+            {{-- {!! Form::select('name', '['list_value' => 'list_label']', 'selected_data', [$options]) !!} --}}
             {!! Form::select('status', [
                 1 => 'Active',
                 0 => 'Inactive'

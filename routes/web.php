@@ -31,6 +31,11 @@ Route::resource('student','StudentController')->middleware('auth');
 Route::post('/student/ajax_get_class_list', 'StudentController@ajaxGetClassList')->middleware('auth')->name('student.ajax_get_class_list');
 Route::post('/student/ajax_show', 'StudentController@ajax_show')->middleware('auth')->name('student.ajax_show');
 
+// Student Extra Controller Routes
+Route::resource('student_extra','StudentExtraController')->middleware('auth');
+Route::post('/student_extra/ajax_get_class_list', 'StudentExtraController@ajaxGetClassList')->middleware('auth')->name('student_extra.ajax_get_class_list');
+Route::post('/student_extra/ajax_show', 'StudentExtraController@ajax_show')->middleware('auth')->name('student_extra.ajax_show');
+
 // Class Controller Routes
 Route::resource('class','ClassController')->middleware('auth');
 

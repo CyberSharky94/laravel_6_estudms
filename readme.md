@@ -69,6 +69,7 @@ MAIL_ENCRYPTION=null
 <pre>php artisan migrate</pre>
 
 8. Link ```storage``` using following command:
+<pre>php artisan storage:link</pre>
 
 9. Generate ```APP_KEY``` using following command:
 <pre>php artisan key:generate</pre>
